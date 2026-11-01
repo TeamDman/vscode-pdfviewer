@@ -1,3 +1,11 @@
+# 2.0.0 - TeamDman hard fork
+
+- Upgrade PDF.js to 6.4.299 and apply both published advisory mitigations.
+- Preserve source-editor focus and reading position through compiler rebuilds.
+- Serialize reloads, retain the last readable PDF during partial writes, and handle file replacement.
+- Integrate reviewed upstream fixes, add tests and CI, and use the TeamDman.pdf extension identity.
+- Record excluded or superseded PRs in UPSTREAM_REVIEW.md.
+
 # Changelog
 
 ## 1.2.2 (2022/12/23)

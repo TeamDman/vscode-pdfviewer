@@ -1,22 +1,27 @@
 import * as vscode from 'vscode';
 import { PdfCustomProvider } from './pdfProvider';
 
-export function activate(context: vscode.ExtensionContext): void {
-  const extensionRoot = vscode.Uri.file(context.extensionPath);
-  // Register our custom editor provider
-  const provider = new PdfCustomProvider(extensionRoot);
+export interface PdfViewerApi {
+  registerOnClickCallback(callback: (text: string) => void): vscode.Disposable;
+}
+export function activate(context: vscode.ExtensionContext): PdfViewerApi {
+  const clicks = new vscode.EventEmitter<string>();
+  const provider = new PdfCustomProvider(context.extensionUri, (text) =>
+    clicks.fire(text),
+  );
   context.subscriptions.push(
+    clicks,
+    provider,
     vscode.window.registerCustomEditorProvider(
       PdfCustomProvider.viewType,
       provider,
       {
         webviewOptions: {
-          enableFindWidget: false, // default
+          enableFindWidget: false,
           retainContextWhenHidden: true,
         },
-      }
-    )
+      },
+    ),
   );
+  return { registerOnClickCallback: (callback) => clicks.event(callback) };
 }
-
-export function deactivate(): void {}

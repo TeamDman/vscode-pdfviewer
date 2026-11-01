@@ -1,14 +1,2 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-#pdf-viewer {
-  display: block;
-  border: none;
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
+#reload-error { position: fixed; bottom: 0; left: 0; right: 0; padding: 8px; background: #fff3cd; color: #332701; z-index: 10000; font: 13px sans-serif; }
+.annotationLayer .popupContent { color: #000; }
