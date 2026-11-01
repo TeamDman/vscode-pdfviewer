@@ -1,3 +1,9 @@
+# 2.0.1
+
+- Fetch the PDF.js worker through the webview window before starting it, avoiding VS Code worker-resource routing timeouts.
+- Remove injected webview body padding and constrain the viewer to the tab width.
+- Test worker fetches and layout at 320, 630, and 900 pixels with VS Code's default padding reproduced.
+
 # 2.0.0 - TeamDman hard fork
 
 - Upgrade PDF.js to 6.4.299 and apply both published advisory mitigations.

@@ -14,7 +14,7 @@ Requires VS Code 1.144 or later. This minimum matches the tested Electron runtim
 npm ci --ignore-scripts
 npm run package
 code --uninstall-extension tomoki1207.pdf
-code --install-extension pdf-2.0.0.vsix --force
+code --install-extension pdf-2.0.1.vsix --force
 ```
 
 The extension ID is `TeamDman.pdf`. Reload VS Code after replacing the old viewer. Existing `pdf-preview.*` settings and `pdf.preview` file associations remain compatible.

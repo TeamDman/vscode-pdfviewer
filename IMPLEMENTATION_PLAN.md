@@ -42,3 +42,9 @@ Docs and package inspection completed. Installed TeamDman.pdf 2.0.0 and verified
 The old editing PRs cannot be safely installed as submitted. Read-only viewing is deliberate. Vendored PDF.js changes are listed in lib/PDFJS-PROVENANCE.md. Tests cannot prove the absence of all malicious PDF parser bugs. User documents and machine-specific paths must not enter the repository.
 
 GitHub CI passed for f59d293 (run 41335893927), including Linux browser and VS Code integration tests, audit, and packaging. The final compatibility metadata requires the tested VS Code 1.144 runtime because the modern PDF.js bundle uses newer Map APIs.
+
+## [x] Follow-up: slow loading and horizontal overflow
+
+The user reported roughly 60-second startup and unwanted horizontal scrolling in the tab. Reproduced in an isolated VS Code host: PDF worker startup stalled and the webview had 40 pixels of document overflow. VS Code injects body padding of 0 20px. Changed worker startup to fetch its module text from the window and launch a local blob worker, and reset body padding/overflow while constraining the main container.
+
+Verified using the user's existing PDF read-only, without copying it into the repo: worker fetch 116 ms, PDF fetch 19 ms, PDF bytes available at 318 ms from webview startup, rendered canvas present, and zero outer overflow. Browser regressions fail independently with the old worker code and old CSS and pass with both fixes at 320/630/900px. Release 2.0.1 carries the correction.

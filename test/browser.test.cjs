@@ -86,8 +86,10 @@ test(
       }
       if (url.pathname === '/preview') {
         const origin = 'http://127.0.0.1:' + server.address().port;
-        const html = await require('./preview-helper.cjs').renderPreview(
-          origin,
+        let html = await require('./preview-helper.cjs').renderPreview(origin);
+        html = html.replace(
+          '<head>',
+          '<head><style>body { padding: 0 20px; }</style>',
         );
         res.setHeader('Content-Type', 'text/html');
         res.end(html);
@@ -120,6 +122,12 @@ test(
     });
     try {
       const page = await browser.newPage();
+      const workerRequests = [];
+      page.on('request', (request) => {
+        if (request.url().endsWith('/pdf.worker.mjs')) {
+          workerRequests.push(request.resourceType());
+        }
+      });
       await page.addInitScript(() => {
         window.acquireVsCodeApi = () => ({ postMessage() {} });
       });
@@ -139,6 +147,36 @@ test(
       await frame.waitForFunction(() =>
         document.querySelector('.textLayer')?.textContent.includes('Before'),
       );
+      assert.deepEqual(
+        workerRequests,
+        ['fetch'],
+        'Fetch the worker in the window, not from a worker client',
+      );
+      await frame.evaluate(() => {
+        PDFViewerApplication.pdfViewer.currentScaleValue = 'page-width';
+      });
+      for (const width of [900, 630, 320]) {
+        await page.locator('iframe').evaluate((element, width) => {
+          element.style.width = width + 'px';
+        }, width);
+        await page.waitForTimeout(200);
+        const geometry = await frame.evaluate(() => ({
+          outer: document.documentElement.scrollWidth - innerWidth,
+          inner:
+            PDFViewerApplication.pdfViewer.container.scrollWidth -
+            PDFViewerApplication.pdfViewer.container.clientWidth,
+          padding: getComputedStyle(document.body).padding,
+        }));
+        assert.equal(geometry.padding, '0px');
+        assert.equal(geometry.outer, 0, JSON.stringify({ width, geometry }));
+        assert.ok(geometry.inner <= 1, JSON.stringify({ width, geometry }));
+      }
+      await page.locator('iframe').evaluate((element) => {
+        element.style.width = '900px';
+      });
+      await frame.evaluate(() => {
+        PDFViewerApplication.pdfViewer.currentScaleValue = '1.25';
+      });
       await frame.evaluate(() => {
         const a = window.PDFViewerApplication;
         a.viewsManager.switchView(1, true);

@@ -2,7 +2,7 @@
   "name": "pdf",
   "displayName": "Teamy PDF Viewer",
   "description": "TeamDman hard fork of vscode-pdfviewer. PDF previews that preserve editor focus during rebuilds.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "publisher": "TeamDman",
   "engines": {
     "vscode": "^1.144.0"
