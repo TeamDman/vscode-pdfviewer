@@ -1,6 +1,6 @@
 # Hard-fork implementation
 
-**Plan status:** Active
+**Plan status:** Complete
 **Primary implementation root:** vscode-pdfviewer, main
 **Last updated:** 2026-11-01
 **Intent audit:** Passed against the initial goal and the PDF.js/security follow-up.
@@ -33,9 +33,9 @@ Replaced 3.1.81 with checksum-verified 6.4.299. Removed the old double load and 
 
 Compile, lint, five Node/browser tests, and VS Code integration passed. Browser test uses production-generated HTML/CSP. VS Code 1.144 test verifies four rewrites plus delete/recreate preserve source focus and leave the PDF tab open. npm audit: zero vulnerabilities after reviewed minimatch/MSAL overrides.
 
-## [~] Package, install, and publish
+## [x] Package, install, and publish
 
-Docs and package inspection completed. Installed TeamDman.pdf 2.0.0 and verified tomoki1207.pdf is absent. Five tests, lint, compilation, native integration, packaging, official vendor checksums, and zero-finding npm audit passed. Commit and push main remain. Preserve the pre-existing .vscode/settings.json modernization in the final commit as requested by “everything”.
+Docs and package inspection completed. Installed TeamDman.pdf 2.0.0 and verified tomoki1207.pdf is absent. Five tests, lint, compilation, native integration, packaging, official vendor checksums, and zero-finding npm audit passed. Implementation commit eaa3de0 and six adaptation merge commits were pushed to main; origin/main matched 8bde07d after publication. The worktree was clean. This final documentation update records completion. Preserve the pre-existing .vscode/settings.json modernization in the final commit as requested by “everything”.
 
 ## Risks and limits
 
