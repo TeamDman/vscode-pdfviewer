@@ -8,7 +8,7 @@ The extension uses PDF.js **6.4.299**, with PDF scripting disabled and a restric
 
 ## Install locally
 
-Requires VS Code 1.96 or later. The integration tests were run on VS Code 1.144.
+Requires VS Code 1.144 or later. This minimum matches the tested Electron runtime for the modern PDF.js bundle.
 
 ```sh
 npm ci --ignore-scripts

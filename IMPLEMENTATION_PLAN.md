@@ -40,3 +40,5 @@ Docs and package inspection completed. Installed TeamDman.pdf 2.0.0 and verified
 ## Risks and limits
 
 The old editing PRs cannot be safely installed as submitted. Read-only viewing is deliberate. Vendored PDF.js changes are listed in lib/PDFJS-PROVENANCE.md. Tests cannot prove the absence of all malicious PDF parser bugs. User documents and machine-specific paths must not enter the repository.
+
+GitHub CI passed for f59d293 (run 41335893927), including Linux browser and VS Code integration tests, audit, and packaging. The final compatibility metadata requires the tested VS Code 1.144 runtime because the modern PDF.js bundle uses newer Map APIs.
